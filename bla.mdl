@@ -1,0 +1,26 @@
+'exp1all(x,y) = |x-3| * (x+y)
+Algorithm exp1all
+ Alphabet "|#", "abcdkmltfwpg"; Numerical 2;
+  "pkkkp" -> "mkkkd"; 'm instead of #
+  "tmk" -> "m"; 'subs abs
+  "m" -> ""; 'subs abs
+  "k" -> "|"; '|abs(x-3)|d|y|
+  "|w" -> "w|"; 'sorting and making fxftxt
+  "tf" -> "ft"; 'sorting and making fxftxt
+  "|#" -> "w#"; 'm instead of #
+  "w" -> "tf"; 'm instead of #
+  "#" -> "pkkkp"; '|x|#kkk#|y|
+  "t" -> "|"; '|x|#kkk#|y|
+  "f|" -> "|f"; '|abs(x,3)|fxfd|y|
+  "fd" -> "df"; '|abs(x,3)|dfxf|y|
+  "f" -> "|"; '|abs(x,3)|d|x||y|
+  "d" -> "g"; '|abs(x,3)|d|x||y|
+  "a|" -> "|ba"; '#a|...|  ==>  #|b...|ba
+  "a" -> ""; ' #|b...|ba  ==>  #|b...|b  
+  "b|" -> "|b"; ' #|b...|b  ==>  #|...|b...b  
+  "|g" -> "ga"; '|...||#|...|b...b  ==>  |...|#a|...|b...b  
+  "g" -> "c"; '#|...|b...b  ==>  c|...|b...b  
+  "c|" -> "c"; 'c|...|b...b  ==>  cb...b  
+  "cb" -> "|c"; 'cb...b  ==>  |...|c  
+  "c" ->. ""; '|...|c  ==>  |...|  
+end exp1all

@@ -1,0 +1,117 @@
+'Homework
+Calculus list
+   '-- true    ===Boolean
+   true = \ s z . s ;
+   'id
+   id = \x. x;
+   '--false  ===Boolean
+   false = \ s z . z ;
+   '--not  ===Boolean
+   not = \ x . x false true  ;
+   '--and  ===Boolean
+   and = \ x y . x y false;
+   multiplication = \ x y f . x (y f) ;
+   '--or  ===Boolean 
+   or = \ x y . x true y ;
+   'pair  (a,b)  -- конструктор пари (a,b)  
+   pair = \ a b  z . z a b ;
+   '  
+   fst = \ p . p true ;
+   scnd = \ p . p false;
+   'succ n = n+1
+   succ = \ x s z . s (x s z) ;
+   'addition x y = x+y
+   addition = \ x y . x succ y ;
+   'isZero(0 )= true   isZero(n) = false n > 0
+   isZero = \ x . x false not false;
+   'predSS (n,n-1) = (n+1,n)
+   predSS = \p . pair  (succ (fst p)) (fst p)  ;
+   'pred(0) = 0, pred(n) = n-1, n>0
+   pred = \n. scnd (n predSS (pair 0 0)) ;
+   'subtract (x,y) = if (x<y) then 0 else x-y
+   subtract = \x y. y pred x;
+   'if (x,y,z) = if x then y else z
+   if = \x y z . x y z;
+   '-- Fix point
+   fix = \f . (\x.f(x x)) (\x.f(x x));
+   'fibB (n) = if  (n < 2) then 1 else fibB (n-1) + fibB (n-2)
+   fibB = \ r n . if (isZero (subtract n 1)) 1 (addition (r (pred n)) (r (pred (pred n))));
+   'firRec(n) --- recursive fibB
+   fibRec = fix fibB;
+   'fibZZ = (0,1)
+   fib0 = pair 0 1;
+   'fibSS (a,b)  = (b,a+b)
+   fib1 = \p . pair (scnd p) (addition (fst p) (scnd p));
+   'fib(n)  = in n<2 then 1 else fib(n-1)+ fib(n-2)
+   fib = \n . scnd (n fib1 fib0);
+   'empty = []
+   empty = \c z . z;
+   'list1 = [1]
+   list1 = \c z . c 1  z;
+   'list3 = [2,0,2]
+   list3 = \c z . c 2  (c 0  (c 2  z));
+   'list5 = [9,7,5, 3,1]
+   list5 = \c z . c 9  (c 7 (c 5 (c 3 (c 1  z))));
+   'cons (a1, [a2,...,an]) = [a1, a2, ..., an] 
+   cons = \a w x y . x a (w x y);
+   'head [a1, a2,...,an] = a1 
+   head = \ w . w true empty;
+   z = pair empty empty;
+   'isEmpty(w) = w==[]
+   isEmpty = \ w . w (\t . false) not false;
+   s = \ b p . pair (cons b (fst p)) (fst p);
+   'tail [a1,a2, ...,an] =  [a2,..an])
+   tail = \ w . scnd ( w s z);
+   'sumB(w) = if (w=[]) then 0 else haid w + sumB( tail w)
+   sumB = \r w. if (isEmpty w) 0 (addition (head w) (r (tail w)));
+   'sumRec ---- recursive  sumB
+   sumRec = fix sumB;
+   'sumS([a1,...,an]) = a1+ ...+ an
+   sumS = \ w . w addition 0 ;
+   ' length helper
+   length0 = \r  w . (isEmpty w) 0 (addition 1 (r (tail w)));
+   'length(w) = length
+   length = fix length0;
+   greatEqual = \x y. isZero (x pred y);
+   'min(x,y) = if x<y then x else y
+   min = \x y. if (greatEqual x y) y x;
+   'fact helper
+   fact1 = pair 1 1;
+   'fact helper
+   fact2 = \p. pair (succ (fst p)) (multiplication (fst p) (scnd p));
+   'fact(x) = x! = 1*2*Е*x
+   fact = \x. if (isZero x) 1 (scnd (x fact2 fact1))  ;
+   modH = \r n k. (greatEqual(pred k) n) n (r (subtract n k) k);
+   mod = fix modH;
+   'gcd helper
+   gcd0 = \r x y.  (isZero y) x  (r y (mod x y));
+   'gcd(x,y)
+   gcd = fix gcd0;
+   c1 = \r p t. (isEmpty p) t (r (tail p) (cons (head p) t));
+   c2 = \r p t. (isEmpty p ) t (r (tail p) (cons (head p) t));
+   c3 = \p. fix c2 p empty;
+   'concat([a1,a2, Е,an],[b1,b2, Е,bm]) =  [a1,a2, Е,an, b1,b2, Е,bm]
+   concat = \p t. fix c1 (c3 p) t;
+   'map helper
+   map0 = \r f p t. (isEmpty p) t (r f (tail p) (cons ((f (head p)) t))) ;
+   'map (f, [a1, a2,Е, an]) = [ f(ai) | 1 ? i ? n]
+   map = \f p. fix map0 f (c3 p) empty;
+   'filter helper
+   filter0 = \r f p t. (isEmpty p) t (if (f (head p)) (r f (tail p) (cons (head p) t)) (r f (tail p) t));
+   'filter (p, [a1, a2,Е, an]) = [ ai | 1 ? i ? n, p(ai) = true]
+   filter = \f p. fix filter0 f (c3 p) empty;
+   exp1all = \x y. (greatEqual x 3) (multiplication (subtract x 3) (addition x y) ) (multiplication (subtract 3 x) (addition x y) );
+   'exp2all(x,y,z) =  (x mod (y+1)) + z  
+   exp2all = \x y z . (addition (mod x (succ y)) z);
+   strangeSub = \x y. (greatEqual x y) (subtract x y) 0 ;
+   'sg(x) = 0 при x=0  ≥ sg(x) = 1  при x>0
+   signum = \x. (isZero x) 0 1;
+   'substractionAbs
+   substractionAbs = \x y. (greatEqual x y) (subtract x y) (subtract y x);
+   'fun
+   fun1 = \x y.(multiplication (signum (strangeSub x 1)) (substractionAbs y 2));
+   '|x-y| mod 2
+   fun2 = \x y. (mod (substractionAbs x y) 2);
+   'fun3(x,y,z) = (x?2) * (y+z)
+   fun3 = \x y z. (multiplication (strangeSub x 2) (addition y z) );
+end list

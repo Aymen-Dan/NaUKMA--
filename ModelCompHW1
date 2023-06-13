@@ -1,0 +1,61 @@
+'?????? 3 ?? ?.
+Algorithm expr1
+ Alphabet "|#", ""; Numerical 2;
+  "|#" -> "#"; '????????? ????????? ??? ?????
+  "#" ->. "|||"; '??????????? ????????? ??? ?????
+end expr1
+
+'expr(x,y,z) = z - (x+y)
+Algorithm expr2
+ Alphabet "|#", "abc"; Numerical 3;
+  "ac|" -> "bac"; 'ac|->bac
+  "ac#" -> "a"; 'ac#->a
+  "a|" -> "ba"; 'a|->ba
+  "ba#|" -> "a#"; 'ba#|->a#
+  "b" -> "b"; 'b -> b
+  "a#" ->. ""; 'a# -> 
+  "" -> "ac"; ' -> ac
+end expr2
+
+'expr3(x) = 3x  + 2*x 
+Algorithm expr3
+ Alphabet "|#", "qrstuv"; Numerical 1;
+  "u|" -> "s||u"; 'u| -> s||u
+  "rtu" ->. "|"; 'rtu ->. |
+  "u" -> ""; 'u -> 
+  "|s" -> "s|"; '|s -> s|
+  "ts" -> "st"; 'ts -> st
+  "s" -> "|"; 's -> |
+  "r|" -> "|rrr"; 'r| -> |rrr
+  "|r" -> "|vqr"; '|r -> |vqr
+  "|v" -> "v"; '|v -> v
+  "v" -> ""; 'v ->
+  "qr" -> "|q"; 'qr -> |q
+  "qt" ->. ""; 'qt ->.
+  "" -> "rtu"; ' -> rtu
+end expr3
+
+'expr4 (x) = (x+2) div 3
+Algorithm expr4
+ Alphabet "|#", "qrst"; Numerical 1;
+  "t" -> "||"; 't -> ||
+  "qs|||" -> "rqs"; 'qs||| -> rqs
+  "s|" -> "s"; 's| -> s
+  "rq" -> "q|"; 'rq -> q|
+  "s" -> ""; 's -> 
+  "q" ->. ""; 'q ->.
+  "" -> "qst"; ' -> qst
+end expr4
+
+'less(x,y) ??????? ???????? 1 ??? x<y ?? 0 ??? x?y
+Algorithm less
+ Alphabet "|#", "abqr"; Numerical 2;
+  "q|" -> "rq"; 'q| -> rq
+  "rq#|" -> "q#"; 'rq#| -> q#
+  "q#||" -> "q#|"; 'q#|| -> q#|
+  "q#|" ->. "|"; 'q#| ->. |
+  "rrq#" -> "q#"; 'rrq# -> q#
+  "rq#" ->. ""; 'rq# ->.
+  "q#" ->. ""; 'q# ->.
+  "" -> "q"; ' -> q
+end less

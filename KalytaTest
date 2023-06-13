@@ -1,0 +1,414 @@
+'fun1(x) = if x mod 2 = 0 then x div 2 else 3*x+1
+Algorithm fun1
+ Alphabet "|#", "qrstuv"; Numerical 1;
+  "q|" -> "s|q"; '*q|* -> *s|q*
+  "s|" -> "|s"; 's| -> |s
+  "sq" -> "qs"; 'sq -> qs
+  "ss" -> ""; 'ss -> * *
+  "qs" -> "t"; 'qs -> *t*
+  "|t" -> "t|||"; '*|t* -> t|||
+  "rt" ->. "|"; '*rt* -> *|*
+  "||q" -> "qu|"; '||q -> *qu|*
+  "r|q" -> "v"; 'r|q -> v
+  "rq" -> "v"; 'rq -> v
+  "u" -> ""; 'u -> * *
+  "v" ->. ""; 'v -> * *
+  "" -> "rq"; '* * -> *rq*
+end fun1
+
+'fun2(x,y,z) = |2*x-y| * (z+x)
+Algorithm fun2
+ Alphabet "|#", "qrstuvw "; Numerical 3;
+  "r|" -> "|sr"; 'r -> |sr  
+  "r#" -> "#"; '*r#* -> *#*  
+  "s|" -> "|s"; 's| -> |s  
+  "s#" -> "#s"; 's# -> #s  
+  "s" -> "|"; 's -> | 
+  "q|" -> "||q"; '*q|* -> *||q*  
+  "|q#|" -> "q#"; '|q#| -> q#  
+  "q#" -> ""; 'q# -> * *  
+  "w|" -> "|w"; 'w| -> |w  
+  "u|" -> "|vu"; '*u|* -> *|vu* 
+  "u" -> ""; 'u -> * * 
+  "v|" -> "|v"; 'v| -> |v 
+  "|w#" -> "w#u"; '|w# -> w#  
+  "w#" -> "t "; 'w# -> t  
+  "t |" -> "t "; 't| -> t 
+  "t v" -> "|t "; 'tv -> |t 
+  "t " ->. ""; 't -> * * 
+  "" -> "wqr"; '* * -> wqr 
+end fun2
+
+'fun1(x) = if x mod 2 = 0 then x div 2 else 3*x+1
+Computer fun1 : 1;
+01 : Z(2)        'MOD2 r2 := 0
+02 : S(2)        'MOD2 r2+1
+03 : S(2)        'MOD2 r2+1
+04 : T(1,6)      'save x to r6
+05 : J(1,2,19)   'MOD2 if r1 = r2 then mod = 0 so goto 15 to get 0
+06 : Z(3)        'MOD2 r3:=0
+07 : J(1,3,20)   'MOD2 if r1=r3 goto 19
+08 : J(2,3,11)   'MOD2 if r2 = r3 goto 10
+09 : S(3)        'MOD2 r3:= r3+1
+10 : J(3,3,7)    'MOD2 goto 6
+11 : Z(4)        'MOD2 r4:=0
+12 : T(2,5)      'MOD2 r5:=r2
+13 : J(1,5,17)   'MOD2 if r1=r5 goto 16
+14 : S(5)        'MOD2 r5 := r5+1
+15 : S(4)        'MOD2  r4 := r4+1
+16 : J(1,1,13)   'MOD2   goto 12
+17 : T(4,1)      'MOD2  r1 := r4     
+18 : J(1,1,5)    'MOD2 goto 4    
+19 : Z(1)        'MOD2 r1:=0  in case x = 2
+20 : Z(2)        'MOD2 r2:=0  (cleaning)
+21 : Z(3)        'MOD2 r3:=0   (cleaning)
+22 : Z(4)        'MOD2 r4:=0   (cleaning)
+23 : Z(5)        'MOD2 r5:=0   (cleaning)
+24 : J(1,2,39)   'IF MOD2 = 0 then goto (x div 2)
+25 : T(6,1)      'put x into 1 to use in 3X+1
+26 : T(1,2)      'mult3 r2 := r1
+27 : Z(3)        'm addition  r3 := 0
+28 : J(2,3,32)   'm a a: if r3=r2 then goto 6
+29 : S(1)        'm a        r1 := r1+1
+30 : S(3)        'm a        r3 := r3+1
+31 : J(1,1,28)   'm a    goto a
+32 : Z(3)        'm addition  r3 := 0
+33 : J(2,3,37)   'm a a: if r3=r2 then goto 37
+34 : S(1)        'm 
+35 : S(3)        'm 
+36 : J(1,1,33)   'm a    goto a
+37 : S(1)        '+1
+38 : J(1,1,49)   'END
+39 : T(6,1)      'moving x to r1
+40 : T(1,3)      'DIV2  r3 := r1  
+41 : Z(1)        'DIV2 r1 := 0  , ... , x
+42 : Z(2)        'DIV2 r2 := 0 , ... , x 
+43 : J(2,3,49)   'DIV2 if (r2 = r3) then end
+44 : S(2)        'DIV2  r2 := r2+1 
+45 : J(2,3,49)   'DIV2 if (r2 = r3) end
+46 : S(2)        'DIV2 r2 := r2+1 
+47 : S(1)        'DIV2 r1 := r1+1 
+48 : J(1,1,43)   'DIV2  goto 51
+end fun1
+
+'fun2(x,y,z) = |2*x-y| * (z+x)
+Computer fun2 : 3;
+01 : T(1,12)     'saving r1(x) to 12
+02 : Z(4)        'XADDZ  r4 := 0
+03 : J(3,4,7)    'XADDZ if r3=r4 then goto 7
+04 : S(1)        'XADDZ  r1 := r1+1
+05 : S(4)        'XADDZ r4:= r4+1
+06 : J(1,1,3)    'XADDZ goto 2
+07 : Z(4)        'cleaning r4
+08 : T(1,11)     'moving (x+z) to r11
+09 : T(12,1)     'returning x to r1 (r1 = x, r2 = y, r3 = z, ....., r11 = (x+z), r12 = x)
+10 : J(1,4,20)   'if r1(x) =r4(0) goto 12(setting y as the result of |2x-y| and then mult. by (z+x))
+11 : T(1,5)      'MULT2X MULT2X r5 := r1 (( x!=0 SO START 2X ))
+12 : Z(6)        'M MULT2X r6 := 0
+13 : J(5,6,17)   'M MULT2X if r5=r6 then goto 18
+14 : S(1)        'M MULT2X  r1 := r1+1
+15 : S(6)        'M MULT2X  r6 := r6+1
+16 : J(1,1,13)   'M MULT2X  goto 14
+17 : Z(6)        'M MULT2X r6 := 0
+18 : J(5,6,20)   'M MULT2X if r5=r6 then goto 20
+19 : J(2,7,40)   'if y=0 go straight to MULTxz
+20 : Z(4)        'ABS 
+21 : J(4,1,36)   'A if r1(x) = r4(0) move on
+22 : S(4)        'A r4:=r4+1 (counter for x) IN CASE X!=0
+23 : J(1,4,27)   'A IF r1(x) = r4 (x less than y) put y in r1 and x in r2 and substract
+24 : S(7)        'A r7:=r7+1 (counter for x)
+25 : J(2,7,30)   'A IF r2(y) = r7 (y less than x) goto substract
+26 : J(1,1,22)   'A cycle jump to find wheather x or y is less
+27 : T(1,8)      'A r8:=r1 (saving x in r8)
+28 : T(2,1)      'A r1:=r2(y) (putting y in r1)
+29 : T(8,2)      'A r2:=r8(y) (putting x in r2)
+30 : Z(4)        'A substraction r4 =0
+31 : J(1,2,35)   'A s if (r1=r2) then goto 35
+32 : S(2)        'A s  r2 := r2+1
+33 : S(4)        'A s  r4 := r4+1
+34 : J(1,1,31)   'A s  goto 2
+35 : T(4,1)      'A s r1 := r4
+36 : J(1,1,38)   'A goto END
+37 : T(2,1)      'A r1=r2(y)
+38 : J(1,1,39)   'A END
+39 : J(2,1,40)   'IF r2(y) = 0 goto ((MULTxz))
+40 : T(11,4)     'MULTxz r4 := r3(z) (starting to do |2x-y|*(zx)) ((r1*r11))
+41 : T(1,11)     'MULTxz r3 := r1(x)
+42 : Z(1)        'MULTxz  r1 := 0
+43 : Z(5)        'MULTxz r5 := 0
+44 : J(5,4,52)   'MULTxz  If(r5 = r4) goto 25
+45 : Z(6)        'MULTxz r6 := 0
+46 : J(11,6,50)  'MULTxz  If(r6 = r11(x)) goto 23
+47 : S(1)        'MULTxz  r1 := r1+1
+48 : S(6)        'MULTxz  r6 := r6+1
+49 : J(1,1,46)   'MULTxz  goto 19
+50 : S(5)        'MULTxz  r5 := r5 +1
+51 : J(1,1,44)   'MULTxz goto 17
+end fun2
+
+'fun1(x) = if x mod 2 = 0 then x div 2 else 3*x+1
+Machine fun1
+ Alphabet "|#", ""; Numerical 1;
+ Initial  "@a0";  Final "@aw";
+"@a0" : "_" -> "@aw_.": "|" -> "@a1|>": "#" -> "@a1_>"; '1
+"@a1" : "_" -> "@ak_<": "|" -> "@a2|>": "#" -> "@a2_>"; '2
+"@a2" : "_" -> "@a3_<": "|" -> "@a3|<": "#" -> "@a2_>"; '3
+"@a3" : "_" -> "@a4_<": "|" -> "@a4#<": "#" -> "@a2_>"; '4
+"@a4" : "_" -> "@a5_<": "|" -> "@a5_>": "#" -> "@a2_>"; '5
+"@a5" : "_" -> "@a6_>": "|" -> "@a6_<": "#" -> "@a6#>"; '6
+"@a6" : "_" -> "@a8_<": "|" -> "@a0|.": "#" -> "@a6#>"; '7
+"@a7" : "_" -> "@a0_>": "|" -> "@a7_<": "#" -> "@a6_>"; '8
+"@a8" : "_" -> "@a9_<": "|" -> "@a7_<": "#" -> "@a8|<"; '9
+"@a9" : "_" -> "@aa_>": "|" -> "@a7_<": "#" -> "@a8|<"; '10
+"@aa" : "_" -> "@ab#>": "|" -> "@a7_<": "#" -> "@a8|<"; '11
+"@ab" : "_" -> "@ac_>": "|" -> "@ab|>": "#" -> "@aw#."; '12
+"@ac" : "_" -> "@ad#<": "|" -> "@ab|>": "#" -> "@aw#."; '13
+"@ad" : "_" -> "@ad_<": "|" -> "@ae_>": "#" -> "@ah_>"; '14
+"@ae" : "_" -> "@ae_>": "|" -> "@ae|>": "#" -> "@af#>"; '15
+"@af" : "_" -> "@ag|<": "|" -> "@af|>": "#" -> "@af#>"; '16
+"@ag" : "_" -> "@ag|<": "|" -> "@ag|<": "#" -> "@ad#<"; '17
+"@ah" : "_" -> "@ah_>": "|" -> "@ag|<": "#" -> "@aw_>"; '18
+"@ai" : "_" -> "@aj|<": "|" -> "@ai|<": "#" -> "@ai|<"; '19
+"@aj" : "_" -> "@al_>": "|" -> "@ai|<": "#" -> "@ai|<"; '20
+"@ak" : "_" -> "@aj_.": "|" -> "@ak|<": "#" -> "@ai#."; '21
+"@al" : "_" -> "@am|<": "|" -> "@al#>": "#" -> "@ai#."; '22
+"@am" : "_" -> "@an_>": "|" -> "@al#>": "#" -> "@am#<"; '23
+"@an" : "_" -> "@an_>": "|" -> "@aw|.": "#" -> "@as_>"; '24
+"@as" : "_" -> "@at|>": "|" -> "@as|>": "#" -> "@as#>"; '25
+"@at" : "_" -> "@au|>": "|" -> "@as|>": "#" -> "@as#>"; '26
+"@au" : "_" -> "@av|<": "|" -> "@as|>": "#" -> "@as#>"; '27
+"@av" : "_" -> "@aw_>": "|" -> "@av|<": "#" -> "@am#."; '28  
+end fun1
+
+'fun2(x,y,z) = |2*x-y| * (z+x)
+Machine fun2
+ Alphabet "|#", ""; Numerical 3;
+ Initial  "@a0";  Final "@dz";
+"@a0" : "_" -> "@an_<": "|" -> "@b1|>": "#" -> "@b0_>"; '(|||_  _)
+"@a1" : "_" -> "@a2|<": "|" -> "@a1_<": "#" -> "@an_<"; '|_ _
+"@a2" : "_" -> "@a3|>": "|" -> "@a1_<": "#" -> "@an_<"; 'lll
+"@a3" : "_" -> "@a4_>": "|" -> "@a3|>": "#" -> "@an_<"; '>>move<
+"@a4" : "_" -> "@a4_>": "|" -> "@a5_<": "#" -> "@a8#<"; '>move<<movemove
+"@a5" : "_" -> "@a5_<": "|" -> "@a6|<": "#" -> "@a8_<";
+"@a6" : "_" -> "@a7|<": "|" -> "@a6|<": "#" -> "@a8_<"; '<<move<
+"@a7" : "_" -> "@a3|>": "|" -> "@a6|<": "#" -> "@a8_<"; '---><<
+"@a8" : "_" -> "@a8_<": "|" -> "@a9|<": "#" -> "@az_<"; 'pppppppppppppp
+"@a9" : "_" -> "@aa_>": "|" -> "@a9|<": "#" -> "@az_<"; 'move>move<move<
+"@aa" : "_" -> "@aa_>": "|" -> "@ab_>": "#" -> "@bw_<"; '>move><
+"@ab" : "_" -> "@a9|<": "|" -> "@ab|>": "#" -> "@ac#<"; '<>move<
+"@ac" : "_" -> "@ad|>": "|" -> "@ac|<": "#" -> "@ac#<"; '><<
+"@ad" : "_" -> "@ad|>": "|" -> "@ad|>": "#" -> "@ae#>"; 'movemovemove>
+"@ae" : "_" -> "@ad|>": "|" -> "@af_<": "#" -> "@az#<"; 'move>movemove<<
+"@af" : "_" -> "@ag_>": "|" -> "@af|<": "#" -> "@af#<"; '><<
+"@ag" : "_" -> "@ag_>": "|" -> "@av_>": "#" -> "@af#<"; '>><
+"@ah" : "_" -> "@ag_>": "|" -> "@ah|>": "#" -> "@ai#>"; '>>>
+"@ai" : "_" -> "@ai_>": "|" -> "@aj_<": "#" -> "@ak#<"; '><<
+"@aj" : "_" -> "@aj_<": "|" -> "@aj_<": "#" -> "@af#<"; '<<<
+"@ak" : "_" -> "@al|<": "|" -> "@aj_<": "#" -> "@az#."; '<<.
+"@al" : "_" -> "@al_<": "|" -> "@aj_<": "#" -> "@am#<"; '<<<
+"@am" : "_" -> "@an_>": "|" -> "@am|<": "#" -> "@am#<"; '><<
+"@an" : "_" -> "@an_>": "|" -> "@az_>": "#" -> "@az#>"; '>>>
+"@ao" : "_" -> "@an_>": "|" -> "@ao|>": "#" -> "@ap#>"; '>>>
+"@ap" : "_" -> "@aq_>": "|" -> "@ar|>": "#" -> "@ap#>";
+"@aq" : "_" -> "@aq_>": "|" -> "@ak|<": "#" -> "@ap#>"; 'ppp
+"@ar" : "_" -> "@aq_>": "|" -> "@ar|>": "#" -> "@as#<"; 'ooo
+"@as" : "_" -> "@aq_>": "|" -> "@as|<": "#" -> "@at|<"; 'owo
+"@at" : "_" -> "@au_>": "|" -> "@at|<": "#" -> "@at|<";
+"@au" : "_" -> "@au_>": "|" -> "@bw_>": "#" -> "@at|<";
+"@av" : "_" -> "@au_>": "|" -> "@ah|.": "#" -> "@aw#>"; '>.>
+"@aw" : "_" -> "@aw_>": "|" -> "@aw|>": "#" -> "@ax#<"; '>><
+"@ax" : "_" -> "@ax_<": "|" -> "@ax|<": "#" -> "@ay_>"; '<<>
+"@ay" : "_" -> "@ay_>": "|" -> "@bw|.": "#" -> "@bj#>"; '>.>
+"@az" : "_" -> "@ay_>": "|" -> "@ao|.": "#" -> "@aw#>"; '>.>
+"@b0" : "_" -> "@ay_>": "|" -> "@bw|.": "#" -> "@bj#>"; '>.>
+"@b1" : "_" -> "@ay_>": "|" -> "@b1|>": "#" -> "@bl#<"; '>><
+"@b2" : "_" -> "@ay_>": "|" -> "@b3|<": "#" -> "@b5#<"; '>>>>>>>>
+"@b3" : "_" -> "@ay_>": "|" -> "@b3|<": "#" -> "@b4#<"; '><<
+"@b4" : "_" -> "@a1_>": "|" -> "@b4|<": "#" -> "@b4#<"; 't
+"@b5" : "_" -> "@b6_>": "|" -> "@b5|<": "#" -> "@b5|<"; '><<
+"@b6" : "_" -> "@b6|>": "|" -> "@b7_>": "#" -> "@b5|<";
+"@b7" : "_" -> "@b8|<": "|" -> "@b7_<": "#" -> "@b5|<"; 'if x=/=0 BUT y = 0 a1
+"@b8" : "_" -> "@b9|>": "|" -> "@b7_<": "#" -> "@b5|<"; 'x != 0, y = 0 a2
+"@b9" : "_" -> "@ba_>": "|" -> "@b9|>": "#" -> "@bd#<"; 'going into the thing
+"@ba" : "_" -> "@ba_>": "|" -> "@bb_<": "#" -> "@be#<"; 'h
+"@bb" : "_" -> "@bb_<": "|" -> "@bc|<": "#" -> "@be_<"; '22222
+"@bc" : "_" -> "@bd|<": "|" -> "@bc|<": "#" -> "@be_<"; 'oooooooooooooooo
+"@bd" : "_" -> "@b9|>": "|" -> "@bc|<": "#" -> "@be_<"; 'OwO
+"@be" : "_" -> "@be_<": "|" -> "@bf|<": "#" -> "@bw_<"; '8888888
+"@bf" : "_" -> "@bg_>": "|" -> "@bf|<": "#" -> "@bw_<"; '0__0
+"@bg" : "_" -> "@bg_>": "|" -> "@bh_>": "#" -> "@bw_<"; '0-0
+"@bh" : "_" -> "@bf|<": "|" -> "@bh|>": "#" -> "@bi#<"; '^^_^
+"@bi" : "_" -> "@bw|.": "|" -> "@bi|<": "#" -> "@bi#<"; '!!!
+"@bj" : "_" -> "@bk_<": "|" -> "@bj|>": "#" -> "@bi#<"; 'x=0,y=0
+"@bk" : "_" -> "@bk_<": "|" -> "@bk_<": "#" -> "@bw_."; '-__-
+"@bl" : "_" -> "@bm#>": "|" -> "@bl|<": "#" -> "@bw_."; '> < .
+"@bm" : "_" -> "@bm#>": "|" -> "@bn_>": "#" -> "@bw_."; '> > _.
+"@bn" : "_" -> "@bn_>": "|" -> "@bn|>": "#" -> "@bo#>"; 'owo
+"@bo" : "_" -> "@bo_>": "|" -> "@bo|>": "#" -> "@bp#>"; 'uwu
+"@bp" : "_" -> "@bq|<": "|" -> "@bp|>": "#" -> "@bp#>"; '< > >
+"@bq" : "_" -> "@bq|<": "|" -> "@bq|<": "#" -> "@br#<"; '< < <
+"@br" : "_" -> "@br_<": "|" -> "@br|<": "#" -> "@bs#<"; '< < <
+"@bs" : "_" -> "@bt_>": "|" -> "@bs|<": "#" -> "@bs#<"; '> < <
+"@bt" : "_" -> "@bt_>": "|" -> "@bm|.": "#" -> "@bu#<"; '> . <
+"@bu" : "_" -> "@bu|<": "|" -> "@bu|<": "#" -> "@bv_>"; '< > >
+"@bv" : "_" -> "@bu|<": "|" -> "@bv|>": "#" -> "@b2#>"; '< > >
+"@bw" : "_" -> "@bz_.": "|" -> "@by|.": "#" -> "@bx#."; '_ | #
+"@bx" : "_" -> "@bw_>": "|" -> "@bw|>": "#" -> "@bw#>"; '> > >
+"@by" : "_" -> "@bw_>": "|" -> "@bw|>": "#" -> "@bw#>"; '> >>
+"@bz" : "_" -> "@c0_<": "|" -> "@c0|<": "#" -> "@c0#<"; '<<<
+"@c0" : "_" -> "@c4_.": "|" -> "@c3|.": "#" -> "@c1#."; '. . .
+"@c1" : "_" -> "@c2_.": "|" -> "@c2_.": "#" -> "@c2_."; '...
+"@c2" : "_" -> "@c0_<": "|" -> "@c0|<": "#" -> "@c0#<"; '<move<move
+"@c3" : "_" -> "@c0_<": "|" -> "@c0|<": "#" -> "@c0#<"; 'movemove<<<
+"@c4" : "_" -> "@c5_>": "|" -> "@c5|>": "#" -> "@c5#>"; 'move>move>move>
+"@c5" : "_" -> "@dq_.": "|" -> "@c6|."; 'dotdot
+"@c6" : "_" -> "@c7_>": "|" -> "@c7|>"; 'movemove
+"@c7" : "_" -> "@c9_.": "|" -> "@c8|."; 'endend
+"@c8" : "_" -> "@c7_>": "|" -> "@c7|>"; '> >
+"@c9" : "_" -> "@ca_>": "|" -> "@ca|>"; '> >
+"@ca" : "_" -> "@dm_.": "|" -> "@cb|."; '_. |.
+"@cb" : "_" -> "@cc_<": "|" -> "@cc|<"; '< <
+"@cc" : "_" -> "@cd_<": "|" -> "@cd|<"; '<  <
+"@cd" : "_" -> "@cf_.": "|" -> "@ce|."; '_. |.
+"@ce" : "_" -> "@cd_<": "|" -> "@cd|<"; '< <
+"@cf" : "_" -> "@cg_>": "|" -> "@cg|>"; '_> |>
+"@cg" : "_" -> "@dd_.": "|" -> "@ch|."; '_. |.
+"@ch" : "_" -> "@ci_.": "|" -> "@ci_."; '_. _.
+"@ci" : "_" -> "@cj_>": "|" -> "@cj|>"; '> >
+"@cj" : "_" -> "@cl_.": "|" -> "@ck|."; '|_. |.    
+"@ck" : "_" -> "@cj_>": "|" -> "@cj|>"; '>>
+"@cl" : "_" -> "@cm_>": "|" -> "@cm|>"; '>>
+"@cm" : "_" -> "@d3_.": "|" -> "@cn|."; 'perper
+"@cn" : "_" -> "@co_.": "|" -> "@co_."; '..
+"@co" : "_" -> "@cp_>": "|" -> "@cp|>"; 'perper
+"@cp" : "_" -> "@cr_.": "|" -> "@cq|."; '_per |per    
+"@cq" : "_" -> "@cp_>": "|" -> "@cp|>"; '_> |>
+"@cr" : "_" -> "@cs_>": "|" -> "@cs|>"; '>>
+"@cs" : "_" -> "@cu_.": "|" -> "@ct|."; '_. |. 
+"@ct" : "_" -> "@cs_>": "|" -> "@cs|>"; '>>
+"@cu" : "_" -> "@cv|.": "|" -> "@cv|."; '|.|.
+"@cv" : "_" -> "@cw_<": "|" -> "@cw|<"; '<<
+"@cw" : "_" -> "@cy_.": "|" -> "@cx|."; 'perper
+"@cx" : "_" -> "@cw_<": "|" -> "@cw|<"; '<<
+"@cy" : "_" -> "@cz_<": "|" -> "@cz|<"; '<<
+"@cz" : "_" -> "@d1_.": "|" -> "@d0|."; 'dotdot
+"@d0" : "_" -> "@cz_<": "|" -> "@cz|<"; '<<
+"@d1" : "_" -> "@d2|.": "|" -> "@d2|."; 'end end
+"@d2" : "_" -> "@cm_>": "|" -> "@cm|>"; '>>
+"@d3" : "_" -> "@d4_<": "|" -> "@d4|<"; 'movemove<
+"@d4" : "_" -> "@d6_.": "|" -> "@d5|."; 'ednend
+"@d5" : "_" -> "@d4_<": "|" -> "@d4|<"; 'moveomve<
+"@d6" : "_" -> "@d7_>": "|" -> "@d7|>"; 'movemove>
+"@d7" : "_" -> "@d8_<": "|" -> "@d8|<"; 'movemove<
+"@d8" : "_" -> "@d9_<": "|" -> "@d9|<"; 'movemove<
+"@d9" : "_" -> "@db_.": "|" -> "@da|."; 'endend
+"@da" : "_" -> "@d9_<": "|" -> "@d9|<"; 'movemove<
+"@db" : "_" -> "@dc|.": "|" -> "@dc|."; 'endend
+"@dc" : "_" -> "@cg_>": "|" -> "@cg|>"; 'movemove
+"@dd" : "_" -> "@de_<": "|" -> "@de|<"; 'movemove<
+"@de" : "_" -> "@dg_.": "|" -> "@df|."; 'endend  
+"@df" : "_" -> "@de_<": "|" -> "@de|<"; 'movemove<
+"@dg" : "_" -> "@dh_>": "|" -> "@dh|>"; 'movemove>
+"@dh" : "_" -> "@di_<": "|" -> "@di|<"; 'movemove<
+"@di" : "_" -> "@dj_>": "|" -> "@dj|>"; 'movemove>
+"@dj" : "_" -> "@dq_.": "|" -> "@dk|."; 'endend
+"@dk" : "_" -> "@dl_.": "|" -> "@dl_."; 'endend
+"@dl" : "_" -> "@dj_>": "|" -> "@dj|>"; 'movemove<
+"@dm" : "_" -> "@dn_<": "|" -> "@dn|<"; 'movemove<
+"@dn" : "_" -> "@do_<": "|" -> "@do|<"; 'movemove<
+"@do" : "_" -> "@dq_.": "|" -> "@dp|."; 'endend
+"@dp" : "_" -> "@do_<": "|" -> "@do|<"; 'movemove<
+"@dq" : "_" -> "@dr_>": "|" -> "@dr|>"; 'movemove
+"@dr" : "_" -> "@dz_>": "|" -> "@ds|."; 'moveOrEnd
+"@ds" : "_" -> "@dt_.": "|" -> "@dt_."; 'endend
+"@dt" : "_" -> "@dr_>": "|" -> "@dr|>"; 'movemove
+end fun2
+
+'test
+Recursive test
+   'K
+   K:1=@S(a1,[@S(a1,[@S(a1,[z1])])]);
+   L:1=@S(a1,[@S(a1,[z1])]);
+   'addition(x1,x2) = x1+x2
+   addition:2=@R(i11,@S(a1,[i33]));
+   'const0(x1) = 0
+   const0:1=z1;
+   'const1v2(x1,x2) = 1
+   const1v2:2=@S(a1,[@S(z1,[i21])]);
+   'y div x
+   division:2=@R(z1,@S(if,[@S(subtractionAbs,[@S(remain,[i32,i31]),@S(subtract1,[i31])]), @S(a1,[i33]),i33]));
+   'fun1(x) = if x mod 2 = 0 then x div 2 else 3*x+1     
+   fun1:1=@S(if,   [@S(remain, [i11, @S(L, [i11]) ]  ), @S(division, [@S  (L, [i11]), i11]), @S(succ, [@S(multiplication, [i11, @S(K,[i11]) ] ) ])  ] );
+   'fun2
+   fun2:3=@S(multiplication,[@S(subtractionAbs,[i32,@S(multiplication,[i31, @S(L,[i31])])]), @S(addition,[i31,i33])  ]   );
+   'fun3(x) = [x1/3]  = max {t | t3 ?x}
+   fun3:1=@R(z1,@S(if,[@S(subtraction,[@S(multiplication,[@S(a1,[i22]),@S(multiplication,[@S(a1,[i22]),@S(a1,[i22])])]),@S(a1,[i21])]),i22, @S(a1,[i22])]));
+   'if
+   if:3=@S(@R(i21,i42) , [i32,i33,i31]) ;
+   'multiplication(x1,x2) = x1*x2
+   multiplication:2=@R(z1,@S(addition,[i33,i31]));
+   'remain   @S(@R(z1,@S(if,[@S(subtractionAbs,[i33,@S(subtract1,[i31])]), @S(z1,[i33]),@S(a1,[i33])])),[i22,i21])
+   remain:2=@S(multiplication,[ @S( @R(z1, @S(multiplication, [ @S(a1, [i33]), @S(sgn, [ @S(subtractionAbs, [i31, @S(a1, [i33] ) ] ) ] ) ] ) ), [i22,i21] ), @S(sgn, [i22]) ] );
+   'sgn
+   sgn:1=@R(z1,const1v2);
+   'subtract1(x1) = if x1=0  then 0 else x1-1
+   subtract1:1=@R(z1,i21);
+   'subtraction(x1,x2)  = if x1 < x2 then 0 else x1-x2
+   subtraction:2=@R(i11,@S(subtract1,[i33]));
+   'subtractionAbs(x1,x2) = |x1-x2|
+   subtractionAbs:2=@S(addition,[subtraction,subtractionRev]);
+   'subtractionRev(x1,x2) = subtraction(x1,x2)
+   subtractionRev:2=@S(subtraction,[i22,i21]);
+   'succ
+   succ:1=@S(a1,[i11]);
+end test
+
+'fun1(x), fun2(x,y,z)
+Calculus test
+   'succ
+   succ = \ x s z . s (x s z) ;
+   'multiplication x*y
+   multiplication = \ x y f . x (y f) ;
+   'TRUE
+   true = \ s z . s ;
+   'FALSE
+   false = \ s z . z ;
+   'x+y
+   addition = \ x y . x succ y ;
+   'NOT
+   not = \ x . x false true  ;
+   'if ix = 0 TRUE, else FALSE
+   isZero = \ x . x false not false;
+   '(n,n-1) = (n+1,n)
+   predSS = \p z. z (succ (p true) ) (p true)  ;
+   'uses predSS
+   pred = \n.(n predSS (\z. z 0 0)) false;
+   'subtracting y from x
+   subtract = \x y. y pred x;
+   '|x-y|
+   subAbs = \x y. x pred y succ (y pred x);
+   'TRUE when x >= y
+   greatEqual = \x y. isZero (y pred x);
+   'fixaroo
+   fix = \f . (\x.f(x x)) (\x.f(x x));
+   'IFffffffffffffffffff in chat
+   if = \x y z . x y z;
+   'recursive curse  [n+(n-1)+...+1+0]
+   rec = \r n . isZero n 0 (n succ (r (pred n)));
+   'fixing the recursive curse
+   recSum = fix rec;
+   'mOODDD
+   MOD1 = \x y. greatEqual x y false true;
+   'mOODDD2
+   MOD2 = \f x y. if(isZero y) 0 ((MOD1 y x) x (f( subtract x y ) y));
+   'gah
+   fixMOD1 = fix MOD1;
+   'recurring thingaroo for xdiv2
+   rec3 = \f n. isZero(n) 0 (succ(f(2 pred n)));
+   'fixing div2
+   DIV2 = fix rec3;
+   'ugh
+   fun1 = \x. isZero (fixMOD1 x 2) (DIV2 x) (succ (multiplication 3 x));
+   'fun2(x,y,z) = |2*x-y| * (z+x)
+   fun2 = \x y z. multiplication (subAbs (multiplication x 2) y) (addition z x);
+end test

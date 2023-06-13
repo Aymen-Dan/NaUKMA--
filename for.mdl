@@ -1,0 +1,73 @@
+'Exam
+Calculus test
+   'id (x) = x
+   id = \ x . x ;
+   'succ n = n+1
+   succ = \ x s z . s (x s z) ;
+   'addition x y = x+y
+   addition = \ x y . x succ y ;
+   'multiplication x y = x*y
+   multiplication = \ x y f . x (y f) ;
+   '-- true    ===Boolean
+   true = \ s z . s ;
+   '--false  ===Boolean
+   false = \ s z . z ;
+   '--and  ===Boolean
+   and = \ x y . x y false;
+   '--or  ===Boolean
+   or = \ x y . x true y ;
+   '--not  ===Boolean
+   not = \ x . x false true  ;
+   'isZero(0 )= true   isZero(n) = false n > 0
+   isZero = \ x . x false not false;
+   'predSS (n,n-1) = (n+1,n)
+   predSS = \p z. z (succ (p true) ) (p true)  ;
+   'pred(0) = 0, pred(n) = n-1, n>0
+   pred = \n.(n predSS (\z. z 0 0)) false;
+   '= x-y
+   subtract = \x y. y pred x;
+   '= |x-y|
+   subAbs = \x y. x pred y succ (y pred x);
+   'greatEqual(x,y) = true <=> x>=y
+   greatEqual = \x y. isZero (y pred x);
+   'equal(x,y) = true <=> x>=y and y>=x
+   equal = \x y. and (isZero (x pred y)) (isZero (y pred x));
+   '-- Fix point
+   fix = \f . (\x.f(x x)) (\x.f(x x));
+   '-- IF
+   if = \x y z . x y z;
+   '-- IF true false
+   ifTrueFalse = \x y. if(isZero(subtract y x)) false true;
+   '--  [n+(n-1)+...+1+0]
+   rec = \r n . isZero n 0 (n succ (r (pred n)));
+   '-- ??????????  [n+(n-1)+...+1+0]
+   recSum = fix rec;
+   'mod1
+   mod1 = \x y. greatEqual x y false true;
+   'mod2
+   mod2 = \f x y. if(isZero y) 0 ((mod1 y x) x (f( subtract x y ) y));
+   'x+=2
+   add2 = \n. succ(succ n);
+   'rec for expr4
+   rec2 = \f n. isZero(n) 0 (succ(f(3 pred n)));
+   '= y+3
+   expr1 = \x y. succ(succ(succ y));
+   '= |z - (x+y)|
+   expr2 = \x y z. subAbs z (addition x y);
+   'less = 0 OR \ s z . s
+   less = \x y. isZero (x pred y) 0 1;
+   '= 3^x + 2*x
+   expr3 = \x. addition (x (multiplication 3 1)) (multiplication x 2) ;
+   '= (x+2) div 3
+   expr4 = fix rec2;
+   '= x mod y
+   remain = fix mod2;
+   '= x div 2
+   rec3 = \f n. isZero(n) 0 (succ(f(2 pred n)));
+   '= x div 2
+   div2 = fix rec3;
+   '= fun1
+   fun1 = \x. isZero (remain x 2) (div2 x) (succ (multiplication 3 x));
+   '= fun2
+   fun2 = \x y z. multiplication(subAbs(multiplication 2 x) y) (addition z x);
+end test

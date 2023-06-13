@@ -1,0 +1,49 @@
+'????? ??? ???????? ??????????? ???????.
+Recursive Lesson
+   'addition(x1,x2) = x1+x2
+   addition:2=@R(i11,@S(a1,[i33]));
+   'const0(x1) = 0
+   const0:1=z1;
+   'const0v2(x1,x2) = 0
+   const0v2:2=@S(z1,[i21]);
+   'const0v3(x1,x2,x3) = 0
+   const0v3:3=@S(z1,[i31]);
+   'const1v0(x) = 0
+   const1v0:1=@S(a1,[z1]);
+   'const1v2(x1,x2) = 1
+   const1v2:2=@S(a1,[@S(z1,[i21])]);
+   'const2(x1) = 2
+   const2:1=@S(a1,[@S(a1,[z1])]);
+   'const2v2(x,y) = 2
+   const2v2:2=@S(a1,[@S(a1,[@S(z1,[i21])])]);
+   'const3v3(x,y,z) = 3
+   const3v3:3=@S(a1,[@S(a1,[@S(a1,[@S(z1,[i31])])])]);
+   'expr1(x1,x2) = y+3
+   expr1:2=@S(a1,[@S(a1,[@S(a1,[i22])])]);
+   'expr2(x,y,z) = |z-(x+y)|
+   expr2:3=@S(subtractionAbs,[@S(addition,[i31,i32]),i33]);
+   'expr3(x) = 3^x  + 2*x
+   expr3:1=@S(addition,[@S(@R(const1v0,@R(z1,@S(addition,[const3v3,i33]))),[i11]),@S(@R(z1,@S(addition,[i22,const2v2])),[i11])]);
+   'less(x,y) = if x<y then 1 else 0    
+   less:2=@S(notSignum,[@S(notSignum,[@S(subtractionRev,[i21,i22])])]);
+   'multiplication(x1,x2) = x1*x2
+   multiplication:2=@R(z1,@S(addition,[i33,i31]));
+   'notSignum(x1) = if x1=0 then 1 else 0
+   notSignum:1=@R(@S(a1,[z1]),@S(z1,[i21]));
+   'remain (x,y) = x mod y
+   remain:2=@S(multiplication,[ @S( @R(z1, @S(multiplication, [ @S(a1, [i33]), @S(sgn, [ @S(subtractionAbs, [i31, @S(a1, [i33] ) ] ) ] ) ] ) ), [i22,i21] ), @S(sgn, [i22]) ] );
+   'sgn(x1) = 0 if x1=0 else if  x1 > 0 sgn(x1) = 1
+   sgn:1=@R(z1,const1v2);
+   'subtract1(x1) = if x1=0  then 0 else x1-1
+   subtract1:1=@R(z1,i21);
+   'subtraction(x1,x2)  = if x1 < x2 then 0 else x1-x2
+   subtraction:2=@R(i11,@S(subtract1,[i33]));
+   'subtractionAbs(x1,x2) = |x1-x2|
+   subtractionAbs:2=@S(addition,[subtraction,subtractionRev]);
+   'subtractionAbs3(x1,x2,x3) = |x1-(x2+x3)| 
+   subtractionAbs3:3=@S(subtractionAbs,[i31,@S(addition,[i32,i33])]);
+   'subtractionPart(x1,x2) = if x1>=x2 then x1-x2 else undefined
+   subtractionPart:2=@M(subtractionAbs3,100);
+   'subtractionRev(x1,x2) = subtraction(x1,x2)
+   subtractionRev:2=@S(subtraction,[i22,i21]);
+end Lesson

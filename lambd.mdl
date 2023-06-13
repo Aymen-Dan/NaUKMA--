@@ -1,0 +1,32 @@
+'fun2(x,y,z) = |2*x-y| * (z+x)
+Calculus fun2
+   'true
+   true = \ s z . s ;
+   'false
+   false = \ s z . z ;
+   'not
+   not = \ x . x false true  ;
+   'succ
+   succ = \ x s z . s (x s z) ;
+   pair = \ a b  z . z a b ;
+   'mult
+   mult = \ x y f . x (y f) ;
+   'fst
+   fst = \ p . p true ;
+   'snd
+   snd = \ p . p false;
+   'addition
+   addition = \ x y . x succ y ;
+   'predSS (n,n-1) = (n+1,n) 
+   predSS = \p . pair  (succ (fst p)) (fst p);
+   'pred(0) = 0, pred(n) = n-1, n>0  
+   pred = \n. snd (n predSS (pair 0 0)) ;
+   'isZero
+   isZero = \ x . x false not false;
+   greatEqual = \x y. isZero (x pred y);
+   subtract = \x y. y pred x;
+   'subAbs
+   subAbs = \x y. (greatEqual x y) (subtract x y) (subtract y x);
+   'fun2(x,y,z) = |2*x-y| * (z+x)
+   fun2 = \x y z. mult (subAbs (mult x 2) y) (addition z x);
+end fun2

@@ -1,0 +1,51 @@
+'fun1(x) = if x mod 2 = 0 then x div 2 else 3*x+1
+Computer fun1 : 1;
+01 : Z(2)        'MOD2 r2 := 0
+02 : S(2)        'MOD2 r2+1
+03 : S(2)        'MOD2 r2+1
+04 : T(1,6)      'save x to r6
+05 : J(1,2,19)   'MOD2 if r1 = r2 then mod = 0 so goto 15 to get 0
+06 : Z(3)        'MOD2 r3:=0
+07 : J(1,3,20)   'MOD2 if r1=r3 goto 19
+08 : J(2,3,11)   'MOD2 if r2 = r3 goto 10
+09 : S(3)        'MOD2 r3:= r3+1
+10 : J(3,3,7)    'MOD2 goto 6
+11 : Z(4)        'MOD2 r4:=0
+12 : T(2,5)      'MOD2 r5:=r2
+13 : J(1,5,17)   'MOD2 if r1=r5 goto 16
+14 : S(5)        'MOD2 r5 := r5+1
+15 : S(4)        'MOD2  r4 := r4+1
+16 : J(1,1,13)   'MOD2   goto 12
+17 : T(4,1)      'MOD2  r1 := r4     
+18 : J(1,1,5)    'MOD2 goto 4    
+19 : Z(1)        'MOD2 r1:=0  in case x = 2
+20 : Z(2)        'MOD2 r2:=0  (cleaning)
+21 : Z(3)        'MOD2 r3:=0   (cleaning)
+22 : Z(4)        'MOD2 r4:=0   (cleaning)
+23 : Z(5)        'MOD2 r5:=0   (cleaning)
+24 : J(1,2,39)   'IF MOD2 = 0 then goto (x div 2)
+25 : T(6,1)      'put x into 1 to use in 3X+1
+26 : T(1,2)      'mult3 r2 := r1
+27 : Z(3)        'm addition  r3 := 0
+28 : J(2,3,32)   'm a a: if r3=r2 then goto 6
+29 : S(1)        'm a        r1 := r1+1
+30 : S(3)        'm a        r3 := r3+1
+31 : J(1,1,28)   'm a    goto a
+32 : Z(3)        'm addition  r3 := 0
+33 : J(2,3,37)   'm a a: if r3=r2 then goto 37
+34 : S(1)        'm 
+35 : S(3)        'm 
+36 : J(1,1,33)   'm a    goto a
+37 : S(1)        '+1
+38 : J(1,1,49)   'END
+39 : T(6,1)      'moving x to r1
+40 : T(1,3)      'DIV2  r3 := r1  
+41 : Z(1)        'DIV2 r1 := 0  , ... , x
+42 : Z(2)        'DIV2 r2 := 0 , ... , x 
+43 : J(2,3,49)   'DIV2 if (r2 = r3) then end
+44 : S(2)        'DIV2  r2 := r2+1 
+45 : J(2,3,49)   'DIV2 if (r2 = r3) end
+46 : S(2)        'DIV2 r2 := r2+1 
+47 : S(1)        'DIV2 r1 := r1+1 
+48 : J(1,1,43)   'DIV2  goto 51
+end fun1
